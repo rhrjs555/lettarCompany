@@ -10,6 +10,8 @@ public class EnemyController : MonoBehaviour
     public float loseSightRange = 15f; // 적이 플레이어를 잃는 범위
     public Animator enemyAnimator; // 적의 애니메이터
     private bool isSpotted = false; // 플레이어가 발견되었는지 여부
+    public AudioSource audio1; // 플레이어를 발견했을 때 재생할 오디오
+    public AudioSource audio2; // 플레이어를 추적할 때 반복 재생할 오디오
 
     void Start()
     {
@@ -37,6 +39,17 @@ public class EnemyController : MonoBehaviour
                     // 플레이어가 발견되면 애니메이터의 isSpotted를 true로 설정
                     isSpotted = true;
                     enemyAnimator.SetBool("isSpotted", true);
+                    // audio1을 한 번만 재생
+                    if (audio1 != null && !audio1.isPlaying)
+                    {
+                        audio1.Play();
+                    }
+
+                    // audio2를 루프 재생 시작
+                    if (audio2 != null && !audio2.isPlaying)
+                    {
+                        audio2.Play();
+                    }
                 }
 
                 // 플레이어를 바라보도록 회전
@@ -52,6 +65,11 @@ public class EnemyController : MonoBehaviour
             // 플레이어가 범위를 벗어나면 isSpotted를 false로 설정
             isSpotted = false;
             enemyAnimator.SetBool("isSpotted", false);
+            // audio2 반복 재생 중지
+            if (audio2 != null && audio2.isPlaying)
+            {
+                audio2.Stop();
+            }
         }
     }
 }

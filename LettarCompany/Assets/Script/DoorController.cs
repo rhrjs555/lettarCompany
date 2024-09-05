@@ -7,6 +7,7 @@ public class DoorController : MonoBehaviour
     public GameObject ui; //E키를눌러상호작용 어쩌고 써있는거
     public Animator doorAnimator;   // 문 애니메이터 
     private bool isPlayerNearby = false;  // 플레이어가 트리거 안에 있는지 여부
+    private bool isDoorOpen = false; // 문이 열려있는지 여부
     public AudioSource audioSource;  // 문 열리는 소리
 
     void Start () 
@@ -42,14 +43,26 @@ public class DoorController : MonoBehaviour
         // 플레이어가 트리거 영역 안에 있고, E 키를 눌렀을 때
         if (isPlayerNearby && Input.GetKeyDown(KeyCode.E))
         {
-            // 애니메이터의 "open" 트리거를 활성화
-            doorAnimator.SetTrigger("open");
-        }
-        // 문 열리는 소리 재생
-        if (audioSource != null)
-        {
-            audioSource.Play();
-            Debug.Log("Playing door sound");
+            if (isDoorOpen)
+            {
+                // 문이 열려있으면 닫기
+                doorAnimator.SetTrigger("close");
+                isDoorOpen = false; // 문 상태를 닫힘으로 변경
+            }
+            else
+            {
+                // 문이 닫혀있으면 열기
+                doorAnimator.SetTrigger("open");
+                isDoorOpen = true; // 문 상태를 열림으로 변경
+            }
+
+            // 문 열리는/닫히는 소리 재생
+            if (audioSource != null)
+            {
+                audioSource.Play();
+                Debug.Log("오디오 재생");
+            }
         }
     }
+
 }

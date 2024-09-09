@@ -467,9 +467,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1276357476}
-  sightRange: 10
-  viewAngle: 60
-  loseSightRange: 15
+  sightRange: 360
+  viewAngle: 180
+  loseSightRange: 90
   enemyAnimator: {fileID: 634297736}
   audio1: {fileID: 634297739}
   audio2: {fileID: 634297738}
